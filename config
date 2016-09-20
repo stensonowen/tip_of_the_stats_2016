@@ -1,5 +1,5 @@
-# vim: syntax=rust
-# fix that github syntax highlighting
+# vim: syntax=python
+# this is actually part of a Rust project but it's not Rust syntax
 
 # Where the git repo will be
 DIR = "/home/me/shared/page_mon/"
@@ -7,7 +7,6 @@ DIR = "/home/me/shared/page_mon/"
 # Visit tipofthehats.org/stats every 2 minutes
 */2 * * * * https://tipofthehats.org/stats
 # Visit twitch.tv every minute 
-# (I was less worried about twitch.tv going down)
 * * * * * https://api.twitch.tv/kraken/streams/tipofthehats?response_type=code&client_id=***REDACTED***
 
 
