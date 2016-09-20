@@ -3,13 +3,23 @@
 
 # This file is a template that extracts tipofthehats.org/stats from the log.sh git repo
 
+# git --git-dir=/... foo
+
 from subprocess import PIPE, Popen, STDOUT
 from datetime import datetime
 import re
 
-outfile = "donations.data"
-infile  = "toth_stats"
-repo    = "shell.git"   #python3 code/interp.py
+outfile = "donations_pm2.data"
+#infile  = "toth_stats"
+infile  = "tipofthehats.org~stats~360128143.cache"
+#infile  = "tipofthehats.org~stats~579716887.cache"
+#repo    = "shell.git"   #python3 code/interp.py
+repo    = "page_mon.git"   #python3 code/interp.py
+
+(outfile, infile, repo) = ("donations_shell_whole.data", "toth_stats", "shell.git")
+(outfile, infile, repo) = ("donations_pm1_whole.data", "tipofthehats.org~stats~360128143.cache", "page_mon.git")
+(outfile, infile, repo) = ("donations_pm2_whole.data", "tipofthehats.org~stats~579716887.cache", "page_mon.git")
+
 
 def extract(text):
     #get relevant data
@@ -33,7 +43,7 @@ def translate_date(date):
     #TODO: change this to something that makes sense
     #date = date[2:-1]   #strip `b""`
     date = datetime.strptime(date, '%Y-%m-%d %H:%M:%S %z')
-    return str(date)
+    return date.timestamp()
 
 def main():
     #There is absolutely a better way to extract git data rather than
@@ -43,6 +53,9 @@ def main():
     f = open(outfile, 'a')
     f.write("#start\n")
     f.write("# timestamp, \tdata\n")
+
+    #keep track of last value: only include updates
+    last = ""
 
     log = Popen(["git", "--git-dir="+repo, "log"], stdout=PIPE)
     #log = str(log.stdout.read())
@@ -55,13 +68,20 @@ def main():
         #text = str(proc.stdout.read().strip())
         text = proc.stdout.read().strip().decode()
         text = extract(text)
-        if text is None:
+        #skip if this isn't new info
+        if text is None or text == last:
+            #print("Same: ", last, commit)
             continue
+            #pass
+        else:
+            last = text[:]
         proc = Popen(["git", "--git-dir="+repo, "show", "-s", "--format=%ci", commit], stdout=PIPE)
         #date = str(proc.stdout.read().strip())
         date = proc.stdout.read().strip().decode()
         date = translate_date(date)
-        f.write(date + ",\t" + text + "\n")
+        if date is None:
+            continue
+        f.write(str(date) + ",\t" + text + "\n")
 
     f.close()
     print("Processed ", len(commits), " commits")
