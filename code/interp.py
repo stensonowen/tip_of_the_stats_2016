@@ -20,8 +20,23 @@ repo    = "page_mon.git"   #python3 code/interp.py
 (outfile, infile, repo) = ("donations_pm1_whole.data", "tipofthehats.org~stats~360128143.cache", "page_mon.git")
 (outfile, infile, repo) = ("donations_pm2_whole.data", "tipofthehats.org~stats~579716887.cache", "page_mon.git")
 
+(outfile, infile, repo) = ("viewers_shell_whole.data", "twitch_stats", "shell.git")
+(outfile, infile, repo) = ("viewers_shell_live.data", "twitch_stats", "shell.git")
 
-def extract(text):
+
+
+def extract_viewers(text):
+    #get 'viewers' from twitch api call
+    search = re.search('"viewers":(\d+)', text)
+    if search is None:
+        #print("Invalid:")
+        #print(text)
+        return None
+    else:
+        n = search.group(1)
+        return str(int(n))
+
+def extract_donation(text):
     #get relevant data
     #TODO: change this for each file you extract data from
     #text = text[2:-1]   #strip `b""`
@@ -31,11 +46,44 @@ def extract(text):
     if search is None:
         print("Invalid:")
         print(text)
-        exit(0)
+        #exit(0)
+        return None
     else:
         n = search.group()
         n = n.replace(",", "")
         return str(int(n))  #throw error if this fails
+
+def extract_date(date):
+    #input: date string from git
+    #output: minutes into the event
+        #start of event is 0
+        #if one day goes over, then it should leak into the next day
+        #unless it's the last day, in which it should just increase
+    dt = datetime.strptime(date, '%Y-%m-%d %H:%M:%S %z')
+    dt_nix = int(dt.timestamp())
+
+    start_nix = 1474041600
+    #if dt_nix < start_nix:
+        #I'm dumb so there's none of these :/
+        #return None
+
+    #use 6am instead of midnight because stream sometimes passed midnight
+    day1_6am      = 1474020000
+    day1_midnight = 1473998400
+    day_len = 24*60*60
+    twelve_hours = 12*60*60
+
+    #how many groups of 24 hours since 6am on the first day
+    day_num             = (dt_nix - day1_6am) // day_len
+    seconds_since_6am   = (dt_nix - day1_6am) % day_len
+    minutes_since_noon  = (seconds_since_6am - 6*60*60)//60
+
+    x_val = minutes_since_noon + day_num * 12*60
+    if x_val < 0:
+        print("ERROR: ", date, '\t', day_num, '\t', x_val)
+        exit(1)
+    return str(x_val)
+    
 
 def translate_date(date):
     #input: date string from git
@@ -49,6 +97,11 @@ def main():
     #There is absolutely a better way to extract git data rather than
     # `subprocesses` and regexes, but I don't have the time to learn it
     # (also this part doesn't have to be pretty)
+
+    #TODO: remember to change these
+    extract_fn = extract_viewers    #extract_donations
+    datetime_fn = translate_date        #?    
+    datetime_fn = extract_date        #?    
 
     f = open(outfile, 'a')
     f.write("#start\n")
@@ -67,7 +120,9 @@ def main():
         proc = Popen(["git", "--git-dir="+repo, "show", commit+':'+infile], stdout=PIPE)
         #text = str(proc.stdout.read().strip())
         text = proc.stdout.read().strip().decode()
-        text = extract(text)
+
+        text = extract_fn(text)
+
         #skip if this isn't new info
         if text is None or text == last:
             #print("Same: ", last, commit)
@@ -78,10 +133,11 @@ def main():
         proc = Popen(["git", "--git-dir="+repo, "show", "-s", "--format=%ci", commit], stdout=PIPE)
         #date = str(proc.stdout.read().strip())
         date = proc.stdout.read().strip().decode()
-        date = translate_date(date)
+        date = datetime_fn(date)
         if date is None:
             continue
-        f.write(str(date) + ",\t" + text + "\n")
+        #f.write(str(int(date)) + ",\t" + text + "\n")
+        f.write(date + ",\t" + text + "\n")
 
     f.close()
     print("Processed ", len(commits), " commits")

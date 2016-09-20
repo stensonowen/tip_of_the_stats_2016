@@ -6,8 +6,9 @@
 
 unset key
 set title "Twitch Viewers"
-set xrange [0:2160]
-set yrange [0:10000]
+#set xrange [0:2160]
+set xrange [0:12*3*60+60]   #allow for overflow on the last day
+set yrange [0:8000]
 
 set label 1  "Introduction"     at   30,150 rotate by 90 #font "Times,24"
 set label 2  "6v6 NA vs EU"     at  150,150 rotate by 90 #font "Times-Roman"
@@ -15,8 +16,8 @@ set label 3  "Communities Pub"  at  270,150 rotate by 90 #font "sans"
 set label 4  "1v1 MGE Tourney"  at  390,150 rotate by 90 #font "arial"
 set label 5  "TF2 Variety Block"at  450,150 rotate by 90 #font "Helvetica"
 set label 6  "Pubs"             at  570,150 rotate by 90 #font "Garamond-Premier-Pro-Italic"
-set label 7  "Dreamcast Block"  at  630,150 rotate by 90
-set label 8  "Day 1 Wrap: MvM"  at  690,150 rotate by 90
+set label 7  "Dreamcast"        at  630,150 rotate by 90
+set label 8  "MvM"              at  690,150 rotate by 90
 
 set label 10 "Intro Pubs"       at  750,150 rotate by 90
 set label 11 "Source Filmmaker" at  810,150 rotate by 90
@@ -26,7 +27,7 @@ set label 14 "Ultiduo Tourney"  at  1050,150 rotate by 90
 set label 15 "Pubs"             at  1110,150 rotate by 90
 set label 16 "TF2 Surf"         at  1170,150 rotate by 90
 set label 17 "Co-op Pubbing"    at  1230,150 rotate by 90
-set label 18 "Jackbox Party Pack" at 1290,150 rotate by 90
+set label 18 "Jackbox"          at 1290,150 rotate by 90
 set label 19 "Day 2 Wrap- Pubs" at  1350,150 rotate by 90
 
 set label 20 "Intro Pubs"       at  1470,150 rotate by 90
@@ -48,4 +49,4 @@ set style line 43 lc rgb 'black' lt 0
 set grid xtics mxtics ls 42, ls 43
 
 set xtics offset 16 add ("Day 1" 0, "Day 2" 720, "Day 3" 1440)
-plot "test.data" lc rgb '#f47425'
+plot "test_.data" lc rgb '#f47425'
