@@ -1,5 +1,4 @@
-#!/usr/bin/python3
-# Extract data from a git repo into a csv
+#!/usr/bin/python3 # Extract data from a git repo into a csv
 
 # This file is a template that extracts tipofthehats.org/stats from the log.sh git repo
 
@@ -21,9 +20,19 @@ repo    = "page_mon.git"   #python3 code/interp.py
 (outfile, infile, repo) = ("donations_pm2_whole.data", "tipofthehats.org~stats~579716887.cache", "page_mon.git")
 
 (outfile, infile, repo) = ("viewers_shell_whole.data", "twitch_stats", "shell.git")
+
 (outfile, infile, repo) = ("viewers_shell_live.data", "twitch_stats", "shell.git")
+(outfile, infile, repo) = ("viewers_pm_live.data", "api.twitch.tv~krakenstreamstipofthehats~725618889.cache", "page_mon.git")
+
+(outfile, infile, repo) = ("donations_shell_live.data", "toth_stats", "shell.git")
+(outfile, infile, repo) = ("donations_pm_live1.data", "tipofthehats.org~stats~360128143.cache", "page_mon.git")
+
+(outfile, infile, repo) = ("donations_shell_all.data", "toth_stats", "shell.git")
+(outfile, infile, repo) = ("donations_pm_all.data", "tipofthehats.org~stats~360128143.cache", "page_mon.git")
 
 
+
+ALLOW_DAY_OVERFLOW = False
 
 def extract_viewers(text):
     #get 'viewers' from twitch api call
@@ -36,7 +45,7 @@ def extract_viewers(text):
         n = search.group(1)
         return str(int(n))
 
-def extract_donation(text):
+def extract_donations(text):
     #get relevant data
     #TODO: change this for each file you extract data from
     #text = text[2:-1]   #strip `b""`
@@ -63,9 +72,17 @@ def extract_date(date):
     dt_nix = int(dt.timestamp())
 
     start_nix = 1474041600
-    #if dt_nix < start_nix:
-        #I'm dumb so there's none of these :/
-        #return None
+    if dt_nix < start_nix:
+        #I'm dumb so there's none of these :/ (* in the viewer category)
+        return None
+
+    if ALLOW_DAY_OVERFLOW == False:
+        #allow 1 hour of overflow at the end
+        in_bounds = [start <= dt_nix < end for (start,end) in ((1474041600,1474084800),
+                            (1474128000,1474171200),
+                            (1474214400,1474261200))]
+        if all([ib == False for ib in in_bounds]):
+            return None
 
     #use 6am instead of midnight because stream sometimes passed midnight
     day1_6am      = 1474020000
@@ -91,7 +108,7 @@ def translate_date(date):
     #TODO: change this to something that makes sense
     #date = date[2:-1]   #strip `b""`
     date = datetime.strptime(date, '%Y-%m-%d %H:%M:%S %z')
-    return date.timestamp()
+    return str(int(date.timestamp()))
 
 def main():
     #There is absolutely a better way to extract git data rather than
@@ -99,16 +116,17 @@ def main():
     # (also this part doesn't have to be pretty)
 
     #TODO: remember to change these
-    extract_fn = extract_viewers    #extract_donations
-    datetime_fn = translate_date        #?    
-    datetime_fn = extract_date        #?    
+    #extract_fn = extract_viewers    #extract_donations
+    extract_fn = extract_donations
+    datetime_fn = translate_date    #keep all results
+    #datetime_fn = extract_date      #only use results while event was live
 
     f = open(outfile, 'a')
     f.write("#start\n")
     f.write("# timestamp, \tdata\n")
 
     #keep track of last value: only include updates
-    last = ""
+    #last = ""
 
     log = Popen(["git", "--git-dir="+repo, "log"], stdout=PIPE)
     #log = str(log.stdout.read())
@@ -124,12 +142,12 @@ def main():
         text = extract_fn(text)
 
         #skip if this isn't new info
-        if text is None or text == last:
+        if text is None: # or text == last:
             #print("Same: ", last, commit)
             continue
             #pass
-        else:
-            last = text[:]
+        #else:
+        #    last = text[:]
         proc = Popen(["git", "--git-dir="+repo, "show", "-s", "--format=%ci", commit], stdout=PIPE)
         #date = str(proc.stdout.read().strip())
         date = proc.stdout.read().strip().decode()
@@ -141,6 +159,7 @@ def main():
 
     f.close()
     print("Processed ", len(commits), " commits")
+    print("Wrote to file: " + outfile)
 
 if __name__=="__main__":
     main()
