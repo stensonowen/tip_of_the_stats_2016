@@ -1,10 +1,12 @@
 29682,	PogChamp
 25965,	BibleThump
+17503,	<3
 10762,	GivePLZ
 7703,	PipeHype
 6458,	Kappa
 5162,	tothHeart
 4788,	WutFace
+4535,	:\)
 4046,	TakeNRG
 3729,	NotLikeThis
 3482,	Kreygasm
@@ -18,12 +20,19 @@
 1691,	tothROASTED
 1555,	SwiftRage
 1512,	taggChamp
+1509,	:D
 1424,	AMPEnergyCherry
 1365,	4Head
+1329,	:\(
 1302,	tothRibbon
 1227,	VoteYea
 1200,	bleedPurple
 1168,	FrankerZ
+
+# Not emotes in most contexts
+#1117,	S
+#1086,	R
+
 1027,	tothLange
 971,	tothSpycrab
 956,	HeyGuys
@@ -47,12 +56,20 @@
 480,	FailFish
 464,	double
 457,	taggO
+440,	GG
+440,	GG
+440,	GG
+440,	GG
+440,	GG
 412,	VoteNay
 412,	TBCheesePull
+407,	;\)
+406,	:\
 394,	ANELE
 390,	KAPOW
 389,	KingMe
 380,	PJSalt
+376,	:o
 350,	BabyRage
 348,	CoolCat
 348,	codMayun
@@ -74,11 +91,14 @@
 247,	imGlitch
 241,	tothPresent
 231,	raysB
+230,	R\)
 229,	Keepo
 227,	BrokeBack
+219,	Hey
 212,	bannyChamp
 208,	raysH
 203,	raysW
+195,	:P
 190,	MingLee
 182,	copyThis
 180,	taggH
@@ -95,6 +115,7 @@
 130,	slinP1
 126,	trukDD
 125,	PartyTime
+121,	Q
 120,	trukPuke
 120,	FUNgineer
 120,	DxCat
@@ -107,6 +128,7 @@
 112,	bannyMouse
 111,	trukFace
 110,	jermaMoon
+109,	>\(
 106,	qtpFEELS
 106,	KappaWealth
 105,	raysFox
@@ -127,6 +149,8 @@
 83,	BloodTrail
 82,	RalpherZ
 82,	OSfrog
+82,	OP
+82,	OP
 82,	MVGame
 81,	RuleFive
 81,	jermaGlue
@@ -159,6 +183,7 @@
 60,	uncleSkill
 60,	jermaSun
 59,	tftvVAC
+59,	Box
 58,	VaultBoy
 57,	FreakinStinkin
 55,	StoneLightning
@@ -171,6 +196,7 @@
 49,	jermaJup1
 49,	jermaEarth
 47,	bannyFat
+46,	:z
 46,	jermaJup2
 46,	codWhale
 46,	bobrossGG
@@ -213,6 +239,7 @@
 30,	evoMindBlown
 30,	emotistabAmby
 29,	tftvGoldenCap
+29,	o_O
 29,	Happy
 29,	auzzie
 28,	uncleNope1
@@ -259,6 +286,7 @@
 19,	tftvKurtkurt
 19,	slinRIP
 19,	seagH
+19,	Gg
 19,	getaClue
 19,	ChefFrank
 19,	BrainSlug
@@ -307,6 +335,10 @@
 14,	Face
 14,	codClam
 14,	bannyBrain
+13,	Win
+13,	Win
+13,	Win
+13,	Win
 13,	sideshowBones
 13,	ruwGrill
 13,	raysHelm
@@ -320,6 +352,7 @@
 13,	BCouch
 12,	tatDab
 12,	svgS
+12,	Sup
 12,	strifeRIP
 12,	shroudH
 12,	RitzMitz
@@ -370,6 +403,7 @@
 10,	bibaKappa
 10,	BatChest
 9,	wolfsCRY
+9,	Wat
 9,	SoBayed
 9,	sigaHeyGuys
 9,	sideshowTilt
@@ -404,6 +438,7 @@
 8,	emotistabKappa
 8,	cirBaka
 8,	ceeAirshot
+8,	Boy
 8,	bingCry
 8,	bibaApplaus
 7,	wolfsLOVE
@@ -461,6 +496,7 @@
 5,	purpleTongue
 5,	purple1
 5,	planetsFeelsBad
+5,	;p
 5,	ohnTen
 5,	no1LOVE
 5,	mendoXD2
@@ -480,6 +516,7 @@
 5,	danLewd
 5,	DAESuppy
 5,	cirHi
+5,	Cap
 5,	budMods
 5,	bogScoped
 5,	bjwSuku
@@ -657,6 +694,8 @@
 2,	rajjAMEN
 2,	qtpWHAT
 2,	qtpMEME
+2,	PP
+2,	PP
 2,	planetsK
 2,	planetsEhe
 2,	pingNana
@@ -708,6 +747,7 @@
 2,	evoRekt
 2,	evo13GoEU
 2,	emilyW
+2,	DIG
 2,	DENIAL
 2,	danteL
 2,	danClap
@@ -720,6 +760,7 @@
 2,	bobrossHappy
 2,	bisFrog
 2,	bing3
+2,	BC
 2,	bboyHype
 2,	ausWah
 2,	ausGrump
@@ -906,6 +947,7 @@
 1,	flewpT
 1,	flewpM
 1,	flewpC
+1,	FC
 1,	fatsEyes
 1,	evoKorea
 1,	evoKorea
@@ -955,6 +997,7 @@
 1,	calebIRIS
 1,	cakeHey
 1,	cakeFp
+1,	C9
 1,	burnPF
 1,	burnLURK
 1,	burnHI
