@@ -9,5 +9,5 @@ I used a combination of programs to collect data:
 * a gross [shell script](/code/log.sh) I threw together that does exactly the same thing as the Rust project just in case (and because I wasn't sure it would be ready on time) to monitor the same data, 
 * and [irssi](https://irssi.org/), a command-line IRC client, to record the Twitch chat.
 
-Neither ended up breaking horribly, so I ended up concatenating the results of the Rust project and the shell hack and [removing duplicates](/code/dedup.py) to increase the number of data points. 
+Neither the rust project nor the shell hack ended up breaking horribly, so I ended up using both.
 
