@@ -1,3 +1,8 @@
+#Number of emotes that appeared in *10 days* of irc logging, 
+# including when the stream was not live
+#I commented out some clearly incorrect options, but will 
+# probably just use the first few
+
 29682,	PogChamp
 25965,	BibleThump
 17503,	<3
@@ -6,7 +11,7 @@
 6458,	Kappa
 5162,	tothHeart
 4788,	WutFace
-4535,	:\)
+4535,	:)
 4046,	TakeNRG
 3729,	NotLikeThis
 3482,	Kreygasm
@@ -23,7 +28,7 @@
 1509,	:D
 1424,	AMPEnergyCherry
 1365,	4Head
-1329,	:\(
+1329,	:(
 1302,	tothRibbon
 1227,	VoteYea
 1200,	bleedPurple
@@ -54,16 +59,23 @@
 485,	taggFries
 482,	cmonBruh
 480,	FailFish
-464,	double
+
+#?
+#464,	double
+
 457,	taggO
-440,	GG
-440,	GG
-440,	GG
-440,	GG
-440,	GG
+
+#Not sure why there's 4 GGs
+# But they're probably not actual emotes
+#440,	GG
+#440,	GG
+#440,	GG
+#440,	GG
+#440,	GG
+
 412,	VoteNay
 412,	TBCheesePull
-407,	;\)
+407,	;)
 406,	:\
 394,	ANELE
 390,	KAPOW
@@ -91,7 +103,7 @@
 247,	imGlitch
 241,	tothPresent
 231,	raysB
-230,	R\)
+230,	R)
 229,	Keepo
 227,	BrokeBack
 219,	Hey
@@ -128,7 +140,7 @@
 112,	bannyMouse
 111,	trukFace
 110,	jermaMoon
-109,	>\(
+109,	>(
 106,	qtpFEELS
 106,	KappaWealth
 105,	raysFox
@@ -153,7 +165,7 @@
 82,	OP
 82,	MVGame
 81,	RuleFive
-81,	jermaGlue
+81, jermaGlue
 81,	getaCheers
 80,	unclePepe
 77,	cirLove
