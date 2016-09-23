@@ -1,50 +1,64 @@
 #!/usr/bin/python3
-# wget https://twitchemotes.com/api_cache/v2/global.json
-# wget https://twitchemotes.com/api_cache/v2/subscriber.json
-# Takes about 20 minutes to run on an i5 2300
-#sort -h -r results > emote_counts.data
 
-import re, json
+#count the number of emotes per minute for each minute the stream was live
+#output in gnuplot-friendly format
+#alternately, count the number of times 'query' appears in each minute
+#searches for query with whitespace before and after
 
-f1 = open('subscriber.json', 'r')
-f2 = open('global.json', 'r')
-f3 = open('results', 'w')
+# takes 3 sec for pop emotes on whole chat
+# takes 26 sec for whole
 
-sub_emotes = re.findall('{"code":"(\w+)"', f1.read())
-glb_emotes = list(json.loads(f2.read())['emotes'])
-smileys = [">\(",":D",":z","o_O",":B\)", "<3", "R\)", ":\(", ":\)", ":P", ":o", ":\\", ";p", ";\)"]
-#lol gotta escape parens or regex gets screwed up 99% of the way through
-emotes = sub_emotes + glb_emotes + smileys
+import sys, re
 
-print("Sub emotes: " + str(len(sub_emotes)))
-print("All emotes: " + str(len(glb_emotes)))
-print("Lil faces:  " + str(len(smileys)))
-print("Total: " + str(len(emotes)))
+def cheat():
+    # Don't look at me BibleThump
+    # I rewrote this for the purpose of validating results for debugging,
+    # bue it's getting late so I'm just going to use it. This is NOT an 
+    # effective way of doing things
+    if len(sys.argv) != 4:
+        print("USAGE: python3 comment_count.py irssi_log emote_file output") 
+        exit(1)
+    f_input = open(sys.argv[1], 'r')
+    f_emotes = open(sys.argv[2], 'r')
+    f_output = open(sys.argv[3], 'w')
 
-f1.close()
-f2.close()
+    emotes = f_emotes.read().split('\n')
+    f_output.write('Min,\t' + ', '.join([emote.rjust(16) for emote in emotes]) + '  # Date\n')
 
-log = open('data/#tipofthehats.log', 'r').read()
-log = log.replace("\n", " \n")  #makes it easier to search for emotes
+    full_text = f_input.read()  #wince
+    start_index = full_text.index('\n--- Day changed Fri Sep 16 2016\n')
+    text = full_text[start_index:]
+    #make things easier to search:
+    text = text.replace(' ', '  ').replace('\n', ' \n')   #going to search spaces around emote
+    parts = text.split('\n---  Day  changed') #list of the full text for all days
+    print(len(parts))
+    # parts[0] = Friday 16th = day 1
+    for day in range(16,20):
+        day_index = day - 15
+        for hour in range(24):
+            time = str(hour).zfill(2) + ':'
+            #relevant_lines = [l if l[:3] == time in parts[day_index]] 
+            relevant_lines = []
+            for l in parts[day_index].split('\n'):
+                if l[:3] == time:
+                    relevant_lines.append(l)
+            #print(len(relevant_lines))
+            if (16 <= day <= 18 and hour >= 12) or (day == 19 and hour == 0):
+                #data = [parts[day_index].count(' '+emote+' ') for emote in emotes]
+                data = ['\n'.join(relevant_lines).count(' '+emote+' ') for emote in emotes]
+                data = ', '.join([str(datum).rjust(16) for datum in data])
+                #n = parts[day_index].count('\n' + time)
+                minute = 30
+                x = (day_index-1) * 12*60 
+                x += (hour%12) * 60
+                x += minute
+                date = "Sept " + str(day) + ", " + time
 
-print("And here... we..... go")
+                line = str(x).zfill(3) + ', ' + data + ',  \t# ' + date + '\n'
+                f_output.write(line)
+                #f_output.write(str(x)+', \t'+str(n)+', \t#'+date+'\n')
+    f_output.close()
 
-#counts = []
-for emote in emotes:
-    #ignore super short emotes because they're not what people were using
-    #this ignores the faces though...
-    #should just omit counts less than 12 or something
-    #if len(emote) < 4:
-        #continue
-    #count must be case sensitive (i.e. ignore typos)
-    #count = log.count(" " + emote)  #start with a space  $omits overlaps 
-    count = len(re.findall(' ' + emote + ' ', log))
-    if count == 0:
-        continue
-    #counts.append(count)
-    f3.write(str(count) + ',\t' + emote + '\n')
-
-f3.close()
-
-
+if __name__=="__main__":
+    cheat()
 
