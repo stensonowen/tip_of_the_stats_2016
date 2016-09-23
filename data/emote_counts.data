@@ -3,6 +3,9 @@
 #I commented out some clearly incorrect options, but will 
 # probably just use the first few
 
+# 197327 total
+# 170470 are in the top 50
+
 29682,	PogChamp
 25965,	BibleThump
 17503,	<3
@@ -106,7 +109,7 @@
 230,	R)
 229,	Keepo
 227,	BrokeBack
-219,	Hey
+#219,	Hey
 212,	bannyChamp
 208,	raysH
 203,	raysW
@@ -127,7 +130,7 @@
 130,	slinP1
 126,	trukDD
 125,	PartyTime
-121,	Q
+#121,	Q
 120,	trukPuke
 120,	FUNgineer
 120,	DxCat
@@ -161,8 +164,8 @@
 83,	BloodTrail
 82,	RalpherZ
 82,	OSfrog
-82,	OP
-82,	OP
+#82,	OP
+#82,	OP
 82,	MVGame
 81,	RuleFive
 81, jermaGlue
