@@ -1,7 +1,7 @@
 # Template for graphing over length of event
 # Col 0: minutes into the event:
 
-set title "Total Donations"
+set title "Total Donations (USD)"
 filename = "total_donations_live.png"
 
 set yrange [0:200000]
