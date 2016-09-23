@@ -1,21 +1,22 @@
 # Template for graphing over length of event
 # Col 0: minutes into the event:
-# Maybe add 1-hour buffer before and after?
-# TODO: Add large-scale Sept 9 - Sept 19 version
-# TODO: fix the font
 
-unset key
 set title "Twitch Viewers"
-#set xrange [0:2160]
-set xrange [0:12*3*60+60]   #allow for overflow on the last day
-set yrange [0:8000]
+filename = "twitch_viewers_live.png"
 
-set label 1  "Introduction"     at   30,150 rotate by 90 #font "Times,24"
-set label 2  "6v6 NA vs EU"     at  150,150 rotate by 90 #font "Times-Roman"
-set label 3  "Communities Pub"  at  270,150 rotate by 90 #font "sans"
-set label 4  "1v1 MGE Tourney"  at  390,150 rotate by 90 #font "arial"
-set label 5  "TF2 Variety Block"at  450,150 rotate by 90 #font "Helvetica"
-set label 6  "Pubs"             at  570,150 rotate by 90 #font "Garamond-Premier-Pro-Italic"
+set yrange [0:8000]
+set xrange [0:12*3*60+60]   #minutes of the event 
+                            #(allow for overflow on the last day)
+set size ratio 1920/1080
+unset key
+
+
+set label 1  "Introduction"     at   30,150 rotate by 90 
+set label 2  "6v6 NA vs EU"     at  150,150 rotate by 90
+set label 3  "Communities Pub"  at  270,150 rotate by 90
+set label 4  "1v1 MGE Tourney"  at  390,150 rotate by 90
+set label 5  "TF2 Variety Block"at  450,150 rotate by 90
+set label 6  "Pubs"             at  570,150 rotate by 90
 set label 7  "Dreamcast"        at  630,150 rotate by 90
 set label 8  "MvM"              at  690,150 rotate by 90
 
@@ -37,7 +38,7 @@ set label 23 "Jump"             at  1650,150 rotate by 90
 set label 24 "Pubs"             at  1770,150 rotate by 90
 set label 25 "Variety Block"    at  1830,150 rotate by 90
 set label 26 "Pubs"             at  1890,150 rotate by 90
-set label 27 "Keep Talking & Nobody Explodes" at 1950,150 rotate by 90
+set label 27 "Keep Talking and ..." at 1950,150 rotate by 90
 set label 28 "Dota Fortress"    at  2010,150 rotate by 90
 set label 29 "Event Wrap"       at  2130,150 rotate by 90
 
@@ -48,7 +49,10 @@ set style line 42 lc rgb 'black' lt 1
 set style line 43 lc rgb 'black' lt 0
 set grid xtics mxtics ls 42, ls 43
 
+set format x ""
 set xtics offset 16 add ("Day 1" 0, "Day 2" 720, "Day 3" 1440)
-#plot "viewers_live.data" lc rgb '#f47425'
-#plot "data/donations_live_no_overflow_dedup.data" lc rgb '#f47425'
+
+set terminal png size 1920,1080 enhanced
+set output filename
+
 plot "data/viewers_live_no_overflow.data" lc rgb '#f47425'
