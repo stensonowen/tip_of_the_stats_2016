@@ -11,3 +11,16 @@ I used a combination of programs to collect data:
 
 Neither the rust project nor the shell hack ended up breaking horribly, so I ended up using both.
 
+The python code mostly exists to transfer data from git repos into csv's simple enough for gnuplot can use. It's not particularly elegant python, but it did its job; it's probably not interesting or helpful enough to actually delve into, but I figured I'd upload it in case I made a mistake somewhere, so that it would be easier to track down.
+
+I ended up using R for the [pie chart of the most popular emotes](/graphics/emote_distribution.png) because gnuplot seems to have some troubs with pie charts. Other than that, though, all the graphing is gnuplot.
+
+(Apologies for missing some viewer data in the beginning of the event (again); twitch changed their api to require an oauth / client id for all requests, which I didn't realize, and surprisingly my 4am fix had a mistake)
+
+All the rendered images can be found in [/graphics](/graphics). 
+The code used to generate those images can be found in [/code/\*.gnuplot](/code) (and [/code/\*.R](/code)). 
+The data those programs depend on are in [/data](/data). 
+The programs used to collect that data are [/code/config](/code/config) and [/code/log.sh](/code/log.sh) (and [page-mon](https://github.com/stensonowen/page-mon)).
+
+Shoutout Tip of the Hats.
+
